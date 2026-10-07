@@ -9,7 +9,7 @@ import { createServer as createViteServer } from 'vite';
 const ADMIN_PATH = process.env.ADMIN_PATH || '/secretadmin2026';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'airdrop_admin_2026!';
 const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'Dimawidad55';
-const SITE_URL = process.env.SITE_URL || 'https://airdropweb.ai.studio';
+const SITE_URL = process.env.SITE_URL || 'https://dropbox.ai.studio';
 
 interface RoomSession {
   roomId: string;
@@ -626,7 +626,7 @@ io.on('connection', (socket) => {
   socket.on('send-text', ({ roomId, text, senderName }) => {
     if (!roomId) return;
     const timestamp = Date.now();
-    
+
     // Broadcast to room members including or excluding sender depending on use
     io.in(roomId).emit('text-received', {
       id: `text-${timestamp}-${Math.random().toString(36).substr(2, 6)}`,
@@ -684,7 +684,7 @@ io.on('connection', (socket) => {
     if (currentRoomId && activeRooms.has(currentRoomId)) {
       const room = activeRooms.get(currentRoomId)!;
       const device = room.devices.get(socket.id);
-      
+
       room.devices.delete(socket.id);
       const remainingDevices = Array.from(room.devices.values());
 
