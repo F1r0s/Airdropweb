@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { createServer as createViteServer } from 'vite';
 
 const ADMIN_PATH = process.env.ADMIN_PATH || '/secretadmin2026';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'airdrop_admin_2026!';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Dropbox_admin_2026!';
 const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'Dimawidad55';
 const SITE_URL = process.env.SITE_URL || 'https://dropbox.ai.studio';
 
@@ -117,7 +117,7 @@ function initPSEOPages(targetCount = 1500, forceRegenerate = false) {
   ];
   const actions = [
     'Transfer',
-    'AirDrop Alternative',
+    'Dropbox Alternative',
     'Send Online Free',
     'Stream Direct',
     'Share without Cables',
@@ -141,7 +141,7 @@ function initPSEOPages(targetCount = 1500, forceRegenerate = false) {
           const slug = `${actionSlug}-${fileSlug}-from-${d1Slug}-to-${d2Slug}`;
           generated.push({
             slug,
-            title: `${a} ${f} from ${d1} to ${d2} Online Free | AirDrop Web`,
+            title: `${a} ${f} from ${d1} to ${d2} Online Free | Dropbox`,
             h1: `Fast ${a} of ${f} between ${d1} & ${d2}`,
             metaDescription: `Transfer and share ${f} from ${d1} to ${d2} online without cables or apps. Link devices via QR code scan or room code over any Wi-Fi or cellular network.`,
             fromDevice: d1,
@@ -149,7 +149,7 @@ function initPSEOPages(targetCount = 1500, forceRegenerate = false) {
             fileCategory: f,
             contentSnippet: `Easily connect your ${d1} and ${d2} to stream uncompressed ${f}. Works seamlessly even if devices are on different Wi-Fi networks or mobile data.`,
             keywords: [
-              `airdrop ${d1.toLowerCase()} to ${d2.toLowerCase()}`,
+              `Dropbox ${d1.toLowerCase()} to ${d2.toLowerCase()}`,
               `transfer ${f.toLowerCase()} ${d1.toLowerCase()} ${d2.toLowerCase()}`,
               `send ${fileSlug} online free`
             ],
@@ -481,8 +481,18 @@ app.get('/api/pseo/:slug', (req, res) => {
 // DYNAMIC SITEMAP INDEX & SUB-SITEMAPS
 // ==========================================
 
+function getEffectiveSiteUrl(req: express.Request): string {
+  const host = req.get('x-forwarded-host') || req.get('host');
+  if (host) {
+    const proto = req.get('x-forwarded-proto') || 'https';
+    return `${proto}://${host}`;
+  }
+  return SITE_URL;
+}
+
 // 1. Root Sitemap Index: /sitemap.xml -> Points to sitemap_1.xml, sitemap_2.xml, etc.
 app.get('/sitemap.xml', (req, res) => {
+  const currentSiteUrl = getEffectiveSiteUrl(req);
   const totalChunks = Math.max(1, Math.ceil(pseoPages.length / PSEO_CHUNK_SIZE));
   const now = new Date().toISOString().split('T')[0];
   res.header('Cache-Control', 'public, max-age=3600');
@@ -492,7 +502,7 @@ app.get('/sitemap.xml', (req, res) => {
 
   for (let i = 1; i <= totalChunks; i++) {
     xml += `  <sitemap>\n`;
-    xml += `    <loc>${SITE_URL}/sitemap_${i}.xml</loc>\n`;
+    xml += `    <loc>${currentSiteUrl}/sitemap_${i}.xml</loc>\n`;
     xml += `    <lastmod>${now}</lastmod>\n`;
     xml += `  </sitemap>\n`;
   }
@@ -505,6 +515,7 @@ app.get('/sitemap.xml', (req, res) => {
 
 // 2. Sub-Sitemaps: /sitemap_:chunkId.xml -> Chunks of ~500 URLs each
 app.get('/sitemap_:chunkId.xml', (req, res) => {
+  const currentSiteUrl = getEffectiveSiteUrl(req);
   res.header('Cache-Control', 'public, max-age=3600');
   const chunkIndex = parseInt(req.params.chunkId, 10) - 1;
   if (isNaN(chunkIndex) || chunkIndex < 0) {
@@ -520,7 +531,7 @@ app.get('/sitemap_:chunkId.xml', (req, res) => {
   // Include root homepage on first sitemap
   if (chunkIndex === 0) {
     xml += `  <url>\n`;
-    xml += `    <loc>${SITE_URL}/</loc>\n`;
+    xml += `    <loc>${currentSiteUrl}/</loc>\n`;
     xml += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
     xml += `    <changefreq>daily</changefreq>\n`;
     xml += `    <priority>1.0</priority>\n`;
@@ -529,7 +540,7 @@ app.get('/sitemap_:chunkId.xml', (req, res) => {
 
   for (const page of chunk) {
     xml += `  <url>\n`;
-    xml += `    <loc>${SITE_URL}/pseo/${page.slug}</loc>\n`;
+    xml += `    <loc>${currentSiteUrl}/pseo/${page.slug}</loc>\n`;
     xml += `    <lastmod>${page.lastmod}</lastmod>\n`;
     xml += `    <changefreq>weekly</changefreq>\n`;
     xml += `    <priority>${page.priority.toFixed(1)}</priority>\n`;
@@ -768,7 +779,7 @@ async function startServer() {
   }
 
   httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log(`[AirDrop Server] Running on http://0.0.0.0:${PORT}`);
+    console.log(`[Dropbox Server] Running on http://0.0.0.0:${PORT}`);
   });
 }
 
