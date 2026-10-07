@@ -706,7 +706,7 @@ io.on('connection', (socket) => {
 });
 
 async function startServer() {
-  const PORT = 3000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
   // SEO Static XML & Robots Endpoints are now served automatically by Vite/Express static middleware from /public or /dist
 
