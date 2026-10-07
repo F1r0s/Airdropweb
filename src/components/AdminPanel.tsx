@@ -706,4 +706,20 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                     href={`/sitemap_${i + 1}.xml`}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs flex items-center justify-betw
+                    className="p-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs flex items-center justify-between text-slate-300 hover:text-amber-400 transition-colors"
+                  >
+                    <span className="font-mono">sitemap_{i + 1}.xml</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+};
+
+export default AdminPanel;
