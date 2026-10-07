@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var _f = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return _f; },
+            set: function(v) { _f = v; },
+            configurable: true,
+            enumerable: true
+          });
+        } catch(e) {}
+      })();
+    </script>
+    <title>AirDrop Web — Craft Cross-Device Media & File Stream</title>
+    
+    <!-- Meta Description & SEO -->
+    <meta name="google-site-verification" content="_q1c45vmkztI1XzkBmHjQVjXxVEI7iDdsAwi1bXwl44" />
+    <meta name="description" content="Instant cross-device file transfer between phone and PC with zero compression. Scan QR code to stream 4K videos, RAW photos, and clipboard notes in browser." />
+    <meta name="keywords" content="airdrop online, online airdrop, airdrop alternative online, airdrop android online, airdrop files free online, airdrop iphone to android online, airdrop online chrome, airdrop online free, airdrop online windows, airdrop pc to iphone online, airdrop web, file transfer" />
+    <meta name="author" content="AirDrop Web" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#020617" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z'/%3E%3Cline x1='16' y1='8' x2='2' y2='22'/%3E%3Cline x1='17.5' y1='15' x2='9' y2='15'/%3E%3C/svg%3E" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AirDrop Web — Instant Cross-Device Media & File Stream" />
+    <meta property="og:description" content="Pair phone to PC instantly via QR code scan. Stream 4K video clips, uncompressed photos, notes, and files without cables or app downloads." />
+    <meta property="og:site_name" content="AirDrop Web" />
+
+    <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Caveat:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+      </head>
+  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-amber-400 selection:text-slate-950">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

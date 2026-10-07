@@ -1,0 +1,5 @@
+{
+  "name": "AirDrop Web - Instant Cross-Device File Transfer",
+  "description": "Scan QR code to pair smartphone and desktop for uncompressed photo, video, file, and text transfer without apps or cables.",
+  "requestFramePermissions": ["camera"]
+}

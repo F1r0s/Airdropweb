@@ -1,0 +1,97 @@
+import { PSEOPage } from '../types';
+
+export const PSEO_DEVICES = [
+  'Android Phone',
+  'iPhone 16 / 15',
+  'iPad Pro & Air',
+  'Samsung Galaxy',
+  'Windows 11 PC',
+  'MacBook Pro & Air',
+  'Google Pixel',
+  'Android Tablet',
+  'Chromebook',
+  'Linux Desktop'
+];
+
+export const PSEO_FILE_TYPES = [
+  'Photos & RAW Images',
+  '4K 60fps Videos',
+  'APK Android Apps',
+  'Large ZIP Archives',
+  'Documents & PDFs',
+  'Lossless Audio & FLAC',
+  'Full Folders & Bundles',
+  'Clipboard & Links'
+];
+
+export const PSEO_ACTIONS = [
+  'Transfer',
+  'AirDrop Alternative',
+  'Send Online Free',
+  'Stream Direct',
+  'Share without Cables',
+  'Instant Wireless Sync'
+];
+
+/**
+ * Generates programmatic SEO pages by combining devices, file types, and search intents.
+ * Produces thousands of unique indexed landing pages with rich metadata.
+ */
+export function generateProgrammaticPages(limit = 1500): PSEOPage[] {
+  const pages: PSEOPage[] = [];
+  const now = new Date().toISOString().split('T')[0];
+
+  for (const d1 of PSEO_DEVICES) {
+    for (const d2 of PSEO_DEVICES) {
+      if (d1 === d2) continue;
+
+      for (const f of PSEO_FILE_TYPES) {
+        for (const a of PSEO_ACTIONS) {
+          if (pages.length >= limit) return pages;
+
+          const d1Slug = d1.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+          const d2Slug = d2.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+          const fileSlug = f.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+          const actionSlug = a.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+          const slug = `${actionSlug}-${fileSlug}-from-${d1Slug}-to-${d2Slug}`;
+          const title = `${a} ${f} from ${d1} to ${d2} Online Free | AirDrop Web`;
+          const h1 = `Fast ${a} of ${f} between ${d1} & ${d2}`;
+          const metaDescription = `Transfer and stream uncompressed ${f} from ${d1} to ${d2} online without apps or cables. Pair instantly via QR code scan or room code over Wi-Fi or cellular networks.`;
+
+          pages.push({
+            slug,
+            title,
+            h1,
+            metaDescription,
+            fromDevice: d1,
+            toDevice: d2,
+            fileCategory: f,
+            contentSnippet: `Seamlessly bridge your ${d1} and ${d2} to stream original-resolution ${f}. Operates without file compression even across different Wi-Fi subnets or 5G/LTE data.`,
+            keywords: [
+              `airdrop ${d1.toLowerCase()} to ${d2.toLowerCase()}`,
+              `transfer ${fileSlug} online`,
+              `send ${fileSlug} from ${d1.toLowerCase()} to ${d2.toLowerCase()}`,
+              `airdrop alternative ${d1.toLowerCase()} to ${d2.toLowerCase()}`
+            ],
+            lastmod: now,
+            priority: pages.length < 100 ? 0.9 : 0.8
+          });
+        }
+      }
+    }
+  }
+
+  return pages;
+}
+
+/**
+ * Splits array into chunks for sitemap_1.xml, sitemap_2.xml, etc.
+ */
+export function chunkPages<T>(items: T[], chunkSize = 500): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += chunkSize) {
+    chunks.push(items.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
