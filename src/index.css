@@ -34,6 +34,24 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3 {
+  font-family: 'Cairo', system-ui, sans-serif;
+  line-height: 1.35;
+}
+
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] button {
+  font-family: 'Cairo', system-ui, sans-serif;
+}
+
+[dir="rtl"] .font-handwriting {
+  font-family: 'Cairo', cursive;
+  font-style: normal;
+}
+
 [dir="rtl"] .font-handwriting {
   font-family: 'Cairo', cursive;
   font-weight: 600;

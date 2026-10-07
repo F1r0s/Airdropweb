@@ -720,6 +720,36 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
+
+    const renderLocalizedHtml = (lang: string, pageSlug?: string) => {
+      const indexPath = path.join(distPath, 'index.html');
+      if (!fs.existsSync(indexPath)) return null;
+      let html = fs.readFileSync(indexPath, 'utf-8');
+      const dir = lang === 'ar' ? 'rtl' : 'ltr';
+      html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}" dir="${dir}"`);
+      if (pageSlug) {
+        const page = pseoPages.find(p => p.slug === pageSlug);
+        if (page) {
+          html = html
+            .replace(/<title>.*?<\/title>/, `<title>${page.title}</title>`)
+            .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${page.metaDescription.replace(/"/g, '&quot;')}" />`);
+        }
+      }
+      return html;
+    };
+
+    app.get('/:lang(en|es|fr|pt|ar)/pseo/:slug', (req, res) => {
+      const html = renderLocalizedHtml(req.params.lang, req.params.slug);
+      if (html) return res.send(html);
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+
+    app.get('/:lang(en|es|fr|pt|ar)', (req, res) => {
+      const html = renderLocalizedHtml(req.params.lang);
+      if (html) return res.send(html);
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+
     app.get('/pseo/:slug', (req, res) => {
       const page = pseoPages.find(p => p.slug === req.params.slug);
       const indexPath = path.join(distPath, 'index.html');

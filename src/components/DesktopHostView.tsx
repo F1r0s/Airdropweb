@@ -691,7 +691,7 @@ export const DesktopHostView: React.FC<DesktopHostViewProps> = ({
       </div>
 
       {/* SEO & CROSS-PLATFORM TRANSFER GUIDE */}
-      <FAQSection onOpenQR={onOpenQR} onJoinRoom={onJoinRoom} />
+      <FAQSection onOpenQR={onOpenQR} onJoinRoom={onJoinRoom} currentLang={currentLang} />
 
       {/* FULL-SCREEN IMAGE LIGHTBOX MODAL (Escape to close) */}
       {selectedImage && (

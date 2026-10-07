@@ -23,20 +23,56 @@ export default function App() {
   const currentPath = window.location.pathname;
   const isAdminRoute = currentPath.startsWith('/secretadmin2026') || window.location.search.includes('admin=true');
 
+  // Multi-language URL routing parser (/en, /es, /fr, /pt, /ar)
+  const supportedLangs: SupportedLanguage[] = ['en', 'es', 'fr', 'pt', 'ar'];
+  const pathSegments = currentPath.split('/').filter(Boolean);
+  const langFromUrl = pathSegments.length > 0 && supportedLangs.includes(pathSegments[0] as SupportedLanguage)
+    ? (pathSegments[0] as SupportedLanguage)
+    : null;
+
+  // Normalized path without language prefix for sub-routes like /pseo/:slug
+  const normalizedPath = langFromUrl
+    ? '/' + pathSegments.slice(1).join('/')
+    : currentPath;
+
   // Check if current route is a programmatic SEO page (/pseo/:slug)
-  const isPseoRoute = currentPath.startsWith('/pseo/');
-  const pseoSlug = isPseoRoute ? currentPath.replace('/pseo/', '').replace(/\/$/, '') : '';
+  const isPseoRoute = normalizedPath.startsWith('/pseo/');
+  const pseoSlug = isPseoRoute ? normalizedPath.replace('/pseo/', '').replace(/\/$/, '') : '';
   const [pseoPageData, setPseoPageData] = useState<PSEOPage | null>(null);
 
-  // Multi-language state (en, es, fr, pt, ar) with browser detection
+  // Multi-language state synchronized with URL prefix
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => {
+    if (langFromUrl) return langFromUrl;
     const saved = localStorage.getItem('airdrop_lang') as SupportedLanguage;
-    if (saved && ['en', 'es', 'fr', 'pt', 'ar'].includes(saved)) {
-      return saved;
-    }
+    if (saved && supportedLangs.includes(saved)) return saved;
     const navLang = navigator.language ? navigator.language.slice(0, 2).toLowerCase() : 'en';
-    return ['en', 'es', 'fr', 'pt', 'ar'].includes(navLang) ? (navLang as SupportedLanguage) : 'en';
+    return supportedLangs.includes(navLang as SupportedLanguage) ? (navLang as SupportedLanguage) : 'en';
   });
+
+  // Handle language switch with clean history pushState (/en, /es, /fr, /pt, /ar)
+  const handleLanguageChange = useCallback((newLang: SupportedLanguage) => {
+    setCurrentLang(newLang);
+    localStorage.setItem('airdrop_lang', newLang);
+
+    const search = window.location.search;
+    const hash = window.location.hash;
+    const targetBase = newLang === 'en' ? (normalizedPath === '/' ? '/' : normalizedPath) : `/${newLang}${normalizedPath === '/' ? '' : normalizedPath}`;
+    window.history.pushState({}, '', `${targetBase}${search}${hash}`);
+  }, [normalizedPath]);
+
+  // Synchronize language state if user clicks browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const segments = window.location.pathname.split('/').filter(Boolean);
+      if (segments.length > 0 && supportedLangs.includes(segments[0] as SupportedLanguage)) {
+        setCurrentLang(segments[0] as SupportedLanguage);
+      } else {
+        setCurrentLang('en');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Apply RTL and Arabic Cairo font to document body
   useEffect(() => {
@@ -311,11 +347,11 @@ export default function App() {
     }
 
     const origin = window.location.origin;
-    const path = window.location.pathname;
-    window.history.replaceState({}, '', path);
+    const homePath = currentLang === 'en' ? '/' : `/${currentLang}`;
+    window.history.replaceState({}, '', homePath);
 
     const freshRoomId = `room-${Math.random().toString(36).substring(2, 8)}`;
-    const pairUrl = `${origin}${path}?room=${freshRoomId}`;
+    const pairUrl = `${origin}${homePath}?room=${freshRoomId}`;
 
     socketManager.joinRoom(freshRoomId, roomState.myDeviceName, 'desktop');
 
@@ -352,7 +388,7 @@ export default function App() {
         onToggleSimulatedPhone={() => setIsSimulatedPhoneOpen((prev) => !prev)}
         isSimulatedPhoneOpen={isSimulatedPhoneOpen}
         currentLang={currentLang}
-        onLanguageChange={setCurrentLang}
+        onLanguageChange={handleLanguageChange}
       />
 
       {/* Main Content Body */}
