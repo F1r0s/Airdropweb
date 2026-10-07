@@ -432,9 +432,9 @@ export default function App() {
       {/* Editorial Footer */}
       <footer className="border-t border-slate-800/60 bg-slate-950/90 py-5 px-6 text-xs text-slate-500 font-sans">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-baseline gap-2">
-            <span className="font-serif-editorial italic text-slate-300 text-sm">
-              AirDrop <span className="not-italic text-amber-400">Web</span>
+          <div className="flex items-center gap-2">
+            <span className="font-sans font-bold text-slate-200 text-sm tracking-tight">
+              Drop <span className="text-amber-400 font-black">Box</span>
             </span>
             <span className="text-[11px] text-slate-500 font-light">
               — Free cross-platform online AirDrop alternative (Android, iPhone, Windows, Mac, Chrome)

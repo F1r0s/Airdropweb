@@ -5,7 +5,7 @@ import {
   Check,
   Info,
   QrCode,
-  Feather,
+  Box,
   RefreshCw,
   LogIn,
   Home,
@@ -73,19 +73,20 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-4">
           <button
             onClick={onGoHome}
-            title="Return to AirDrop Web Home"
+            title="Return to Drop Box Home"
             className="flex items-center gap-3 group text-left rtl:text-right focus:outline-none cursor-pointer"
           >
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/60 text-amber-400 shadow-inner group-hover:border-amber-500/50 transition-colors">
-              <Feather className="w-5 h-5 text-amber-400 group-hover:scale-105 transition-transform" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-slate-900 to-slate-950 border border-amber-500/30 text-amber-400 shadow-lg shadow-amber-500/5 group-hover:border-amber-400/60 group-hover:shadow-amber-500/20 group-hover:scale-105 transition-all">
+              <Box className="w-5 h-5 text-amber-400 group-hover:rotate-6 transition-transform" />
             </div>
             <div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-serif-editorial italic text-2xl font-bold text-white tracking-tight group-hover:text-amber-200 transition-colors">
-                  AirDrop <span className="not-italic text-amber-400 font-light">Web</span>
+              <div className="flex items-center gap-2">
+                <span className="font-sans font-bold text-2xl text-white tracking-tight group-hover:text-amber-100 transition-colors">
+                  Drop <span className="text-amber-400 font-black">Box</span>
                 </span>
-                <span className="font-handwriting text-amber-400/90 text-sm italic hidden sm:inline">
-                  ~ craft stream
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-mono uppercase tracking-wider font-semibold hidden sm:inline-flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  studio
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-sans tracking-wide">
@@ -180,11 +181,10 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Test Phone Simulation Drawer button */}
           <button
             onClick={onToggleSimulatedPhone}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-              isSimulatedPhoneOpen
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${isSimulatedPhoneOpen
                 ? 'bg-slate-800 text-amber-400 border-amber-500/40 shadow-inner'
                 : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800'
-            }`}
+              }`}
           >
             <Smartphone className="w-4 h-4 text-indigo-400" />
             <span className="hidden sm:inline">{t.btnSimulatePhone}</span>
@@ -225,11 +225,10 @@ export const Header: React.FC<HeaderProps> = ({
                       if (onLanguageChange) onLanguageChange(item.code as SupportedLanguage);
                       setIsLangMenuOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${
-                      currentLang === item.code
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${currentLang === item.code
                         ? 'bg-amber-500 text-slate-950 font-bold'
                         : 'text-slate-300 hover:bg-slate-800'
-                    }`}
+                      }`}
                   >
                     <span>{item.label}</span>
                     {currentLang === item.code && <Check className="w-3.5 h-3.5" />}

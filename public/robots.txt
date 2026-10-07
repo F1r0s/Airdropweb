@@ -99,7 +99,7 @@ Disallow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://airdropweb.ai.studio/sitemap.xml
-Sitemap: https://airdropweb.ai.studio/sitemap_1.xml
-Sitemap: https://airdropweb.ai.studio/sitemap_2.xml
-Sitemap: https://airdropweb.ai.studio/sitemap_3.xml
+Sitemap: https://dropbox.ai.studio/sitemap.xml
+Sitemap: https://dropbox.ai.studio/sitemap_1.xml
+Sitemap: https://dropbox.ai.studio/sitemap_2.xml
+Sitemap: https://dropbox.ai.studio/sitemap_3.xml

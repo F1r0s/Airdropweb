@@ -58,9 +58,9 @@ export interface TranslationSchema {
 
 export const TRANSLATIONS: Record<SupportedLanguage, TranslationSchema> = {
   en: {
-    brandTitle: 'AirDrop',
-    brandTagline: 'Web',
-    brandSubtag: 'craft transfer',
+    brandTitle: 'Drop',
+    brandTagline: 'Box',
+    brandSubtag: 'studio stream',
     heroBadge: '✍️ Seamless bridge between mobile, tablet & PC —',
     heroHeadlinePrefix: 'Send photos, 4K videos & ',
     heroHeadlineHighlight: 'APK files',
